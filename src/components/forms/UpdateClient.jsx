@@ -24,6 +24,7 @@ import MyDatePicker from "../common/MyDatePicker";
 import SelectTag from "../common/SelectTag";
 import { useSelector, useDispatch } from "react-redux";
 import { selectClientId, clearClientId } from "../../store/slice/ClientSlice";
+import moment from "moment";
 
 const UpdateClient = () => {
   const singleFileRef = useRef();
@@ -119,7 +120,10 @@ const UpdateClient = () => {
         toast.error("Failed to fetch client details");
       });
   }, [clientId]);
-
+  const workStartDate= projectData.workStartDate ? moment(projectData.workStartDate, 'DD-MM-YY') : null;
+  const clientBirthdayDate= projectData.clientBirthday? moment(projectData.clientBirthday, 'DD-MM-YY') : null;
+  const clientAnniversaryDate = projectData.clientAnniversary? moment(projectData.clientAnniversary, 'DD-MM-YY') : null;
+  const companyAnniversaryDate = projectData.companyAnniversary? moment(projectData.companyAnniversary, 'DD-MM-YY') : null;
 
 
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -414,14 +418,15 @@ const UpdateClient = () => {
                     <FormControl id="companyAnniversary">
                       <FormLabel>Work Start Date</FormLabel>
                       <MyDatePicker
-                        selected={projectData.workStartDate}
-                        onChange={(date) =>
-                          setProjectData({
-                            ...projectData,
-                            workStartDate: date,
-                          })
-                        }
-                        format={"DD/MM/YYYY"}
+                        value={workStartDate}
+                      selected={projectData.workStartDate}
+                      onChange={(date) =>
+                        setProjectData({
+                          ...projectData,
+                          workStartDate: date,
+                        })
+                      }
+                      format={"DD/MM/YYYY"}
                       />
                     </FormControl>
                   </div>
@@ -485,6 +490,7 @@ const UpdateClient = () => {
                     <FormControl id="clientBirthday">
                       <FormLabel>Client Birthday</FormLabel>
                       <MyDatePicker
+                      value={clientBirthdayDate}
                         selected={projectData.clientBirthday}
                         onChange={(date) =>
                           setProjectData({
@@ -498,6 +504,7 @@ const UpdateClient = () => {
                     <FormControl id="clientAnniversary">
                       <FormLabel>Client Anniversary</FormLabel>
                       <MyDatePicker
+                      value={clientAnniversaryDate}
                         selected={projectData.clientAnniversary}
                         onChange={(date) =>
                           setProjectData({
@@ -511,6 +518,7 @@ const UpdateClient = () => {
                     <FormControl id="companyAnniversary">
                       <FormLabel>Company Anniversary</FormLabel>
                       <MyDatePicker
+                      value={clientAnniversaryDate}
                         selected={projectData.companyAnniversary}
                         onChange={(date) =>
                           setProjectData({
